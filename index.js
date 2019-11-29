@@ -4,16 +4,34 @@ var graphql = require('graphql');
 
 var db = {
   movies: [
-    { title: 'Once Upon a Time in Hollywood', year: 2019 },
-    { title: 'Rocky', year: 1976 },
+    { id: 1, title: 'Once Upon a Time in Hollywood', year: 2019, cast: [2, 3] },
+    { id: 2, title: 'Rocky', year: 1976, cast: [1] },
+  ],
+  actors: [
+    { id: 1, name: 'Sylvester Stallone' },
+    { id: 2, name: 'Brad Pitt' },
+    { id: 3, name: 'Leonardo DiCaprio' },
   ],
 };
+
+var actorType = new graphql.GraphQLObjectType({
+  name: 'Actor',
+  fields: {
+    name: { type: graphql.GraphQLString },
+  }
+});
 
 var movieType = new graphql.GraphQLObjectType({
   name: 'Movie',
   fields: {
     title: { type: graphql.GraphQLString },
     year: { type: graphql.GraphQLInt },
+    cast: {
+      type: new graphql.GraphQLList(actorType),
+      resolve: (obj) => (
+        db.actors.filter(a => obj.cast.includes(a.id))
+      ),
+    },
   }
 });
 
