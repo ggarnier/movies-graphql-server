@@ -4,25 +4,29 @@ var { buildSchema } = require('graphql');
 
 var schema = buildSchema(`
   type Query {
-    moviesByYear(year: String): [Movie!]!
+    moviesByTitle(title: String): [Movie!]!
+    moviesByYear(year: Int): [Movie!]!
   }
   type Movie {
     title: String!
-    year: String!
+    year: Int!
   }
 `);
 
 var db = {
   movies: [
-    { title: 'Once Upon a Time in Hollywood', year: '2019' },
-    { title: 'Rocky', year: '1976' },
+    { title: 'Once Upon a Time in Hollywood', year: 2019 },
+    { title: 'Rocky', year: 1976 },
   ],
 };
 
 var root = {
-  moviesByYear: (args) => {
-    return db.movies.filter(m => m.year === args.year);
-  },
+  moviesByTitle: (args) => (
+    db.movies.filter(m => m.title.includes(args.title))
+  ),
+  moviesByYear: (args) => (
+    db.movies.filter(m => m.year === args.year)
+  ),
 };
 
 var app = express();
