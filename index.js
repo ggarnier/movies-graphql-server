@@ -6,7 +6,7 @@ var db = {
   movies: [
     { id: 1, title: 'Once Upon a Time in Hollywood', year: 2019, cast: [2, 3] },
     { id: 2, title: 'Rocky', year: 1976, cast: [1] },
-    { id: 3, title: 'The Wolf of Wall Street', year: 2012, cast: [3] },
+    { id: 3, title: 'The Wolf of Wall Street', year: 2013, cast: [3] },
   ],
   actors: [
     { id: 1, name: 'Sylvester Stallone' },
